@@ -8,6 +8,7 @@ import Layout from './components/layout/Layout';
 
 // Páginas públicas
 import HomePage from './pages/public/HomePage';
+import MenuPage from './pages/public/MenuPage';
 import RestaurantsPage from './pages/public/RestaurantsPage';
 import RestaurantPage from './pages/public/RestaurantPage';
 import CartPage from './pages/public/CartPage';
@@ -53,6 +54,10 @@ function App() {
                 style: {
                   background: '#10b981',
                 },
+                iconTheme: {
+                  primary: '#fff',
+                  secondary: '#10b981',
+                },
               },
               error: {
                 style: {
@@ -65,6 +70,7 @@ function App() {
           <Routes>
             {/* Rutas públicas */}
             <Route path="/" element={<Layout><HomePage /></Layout>} />
+            <Route path="/menu" element={<Layout><MenuPage /></Layout>} />
             <Route path="/restaurantes" element={<Layout><RestaurantsPage /></Layout>} />
             <Route path="/restaurante/:slug" element={<Layout><RestaurantPage /></Layout>} />
             <Route path="/carrito" element={<Layout><CartPage /></Layout>} />
@@ -72,6 +78,11 @@ function App() {
             <Route path="/pedido/:trackingNumber" element={<Layout><TrackOrderPage /></Layout>} />
             <Route path="/login" element={<Layout><LoginPage /></Layout>} />
             <Route path="/registro" element={<Layout><RegisterPage /></Layout>} />
+
+            {/* Rutas de información */}
+            <Route path="/nosotros" element={<Layout><AboutPage /></Layout>} />
+            <Route path="/contacto" element={<Layout><ContactPage /></Layout>} />
+            <Route path="/reservas" element={<Layout><ReservationsPage /></Layout>} />
 
             {/* Rutas de usuario autenticado */}
             <Route path="/perfil" element={<Layout><ProfilePage /></Layout>} />
@@ -93,13 +104,22 @@ function App() {
             {/* Rutas de domiciliario */}
             <Route path="/domiciliario" element={<DeliveryDashboard />} />
 
+            {/* Páginas legales */}
+            <Route path="/terminos" element={<Layout><LegalPage type="terms" /></Layout>} />
+            <Route path="/privacidad" element={<Layout><LegalPage type="privacy" /></Layout>} />
+            <Route path="/cookies" element={<Layout><LegalPage type="cookies" /></Layout>} />
+
             {/* 404 */}
             <Route path="*" element={
               <Layout>
-                <div className="min-h-[60vh] flex items-center justify-center">
+                <div className="min-h-[60vh] flex items-center justify-center bg-gray-50">
                   <div className="text-center">
-                    <h1 className="text-6xl font-bold text-gray-300">404</h1>
-                    <p className="text-xl text-gray-600 mt-4">Página no encontrada</p>
+                    <h1 className="text-8xl font-bold text-primary-200">404</h1>
+                    <h2 className="text-2xl font-serif font-bold text-gray-900 mt-4">Página no encontrada</h2>
+                    <p className="text-gray-600 mt-2 mb-6">Lo sentimos, la página que buscas no existe.</p>
+                    <a href="/" className="btn btn-primary inline-flex items-center gap-2">
+                      Volver al inicio
+                    </a>
                   </div>
                 </div>
               </Layout>
@@ -110,5 +130,52 @@ function App() {
     </AuthProvider>
   );
 }
+
+// Placeholder components for pages that don't exist yet
+const AboutPage = () => (
+  <div className="min-h-screen bg-gray-50 py-20">
+    <div className="container-custom text-center">
+      <h1 className="text-4xl font-serif font-bold">Sobre Nosotros</h1>
+      <p className="text-gray-600 mt-4">Página en construcción</p>
+    </div>
+  </div>
+);
+
+const ContactPage = () => (
+  <div className="min-h-screen bg-gray-50 py-20">
+    <div className="container-custom text-center">
+      <h1 className="text-4xl font-serif font-bold">Contacto</h1>
+      <p className="text-gray-600 mt-4">Página en construcción</p>
+    </div>
+  </div>
+);
+
+const ReservationsPage = () => (
+  <div className="min-h-screen bg-gray-50 py-20">
+    <div className="container-custom text-center">
+      <h1 className="text-4xl font-serif font-bold">Reservaciones</h1>
+      <p className="text-gray-600 mt-4">Página en construcción</p>
+    </div>
+  </div>
+);
+
+const LegalPage = ({ type }) => {
+  const titles = {
+    terms: 'Términos y Condiciones',
+    privacy: 'Política de Privacidad',
+    cookies: 'Política de Cookies'
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-20">
+      <div className="container-custom">
+        <h1 className="text-4xl font-serif font-bold text-center">{titles[type]}</h1>
+        <div className="max-w-3xl mx-auto mt-8 bg-white rounded-2xl p-8 shadow-sm">
+          <p className="text-gray-600">Contenido legal en construcción.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default App;

@@ -19,6 +19,8 @@ import paymentRoutes from './routes/payment.routes.js';
 import userRoutes from './routes/user.routes.js';
 import deliveryRoutes from './routes/delivery.routes.js';
 import adminRoutes from './routes/admin.routes.js';
+import whatsappRoutes from './routes/whatsapp.routes.js';
+import analyticsRoutes from './routes/analytics.routes.js';
 
 // Importar middlewares
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -27,16 +29,22 @@ import { notFound } from './middlewares/notFound.js';
 const app = express();
 const httpServer = createServer(app);
 
-// Configuración de CORS para Render + Vercel
+// Configuración de CORS para Railway + Vercel
 const allowedOrigins = [
   process.env.CLIENT_URL,
   'http://localhost:5173',
   'http://localhost:3000',
+  'https://mardesabores.com',
+  'https://www.mardesabores.com',
 ].filter(Boolean);
 
 // En producción, también permitir el dominio de Vercel
-if (process.env.NODE_ENV === 'production' && process.env.VERCEL_URL) {
-  allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+if (process.env.NODE_ENV === 'production') {
+  if (process.env.VERCEL_URL) {
+    allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+  }
+  // Permitir todos los subdominios de vercel.app
+  allowedOrigins.push(/\.vercel\.app$/);
 }
 
 const corsOptions = {
@@ -44,38 +52,50 @@ const corsOptions = {
     // Permitir requests sin origin (como mobile apps o Postman)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.some(allowed => origin.startsWith(allowed) || allowed.includes(origin))) {
+    // Check regex patterns
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (allowed instanceof RegExp) {
+        return allowed.test(origin);
+      }
+      return origin.startsWith(allowed) || allowed.includes(origin);
+    });
+
+    if (isAllowed) {
       callback(null, true);
     } else {
       // En desarrollo permitir cualquier origen
       if (process.env.NODE_ENV !== 'production') {
         callback(null, true);
       } else {
+        console.warn('CORS blocked origin:', origin);
         callback(new Error('No permitido por CORS'));
       }
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
 // Configurar Socket.io para notificaciones en tiempo real
 const io = new Server(httpServer, {
   cors: corsOptions,
   transports: ['websocket', 'polling'],
+  pingTimeout: 60000,
+  pingInterval: 25000,
 });
 
 // Middlewares globales
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false,
 }));
 app.use(cors(corsOptions));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Trust proxy para Render
+// Trust proxy para Railway
 app.set('trust proxy', 1);
 
 // Hacer io disponible en las rutas
@@ -84,21 +104,31 @@ app.set('io', io);
 // Ruta raíz
 app.get('/', (req, res) => {
   res.json({
-    name: '[NOMBRE DE LA PLATAFORMA] API',
-    version: '1.0.0',
+    name: 'Mar de Sabores API',
+    version: '2.0.0',
     status: 'running',
     environment: process.env.NODE_ENV || 'development',
     documentation: '/api/health',
+    features: [
+      'WhatsApp Business API Integration',
+      'Chatbot Conversacional',
+      'Reservas en Tiempo Real',
+      'Tracking de Pedidos',
+      'Múltiples Pasarelas de Pago',
+      'Analytics Dashboard'
+    ]
   });
 });
 
-// Ruta de health check (importante para Render)
+// Ruta de health check (importante para Railway)
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     message: 'API funcionando correctamente',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
   });
 });
 
@@ -112,6 +142,8 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/delivery', deliveryRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Manejo de rutas no encontradas
 app.use(notFound);
@@ -135,18 +167,51 @@ io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} unido a order-${orderId}`);
   });
 
+  // Unirse a sala de admin
+  socket.on('join-admin', () => {
+    socket.join('admin-dashboard');
+    console.log(`Socket ${socket.id} unido a admin-dashboard`);
+  });
+
+  // Unirse a sala de delivery
+  socket.on('join-delivery', (deliveryId) => {
+    socket.join(`delivery-${deliveryId}`);
+    console.log(`Socket ${socket.id} unido a delivery-${deliveryId}`);
+  });
+
+  // Actualización de ubicación de domiciliario
+  socket.on('delivery-location-update', (data) => {
+    const { orderId, location } = data;
+    io.to(`order-${orderId}`).emit('delivery-location', location);
+  });
+
   socket.on('disconnect', () => {
     console.log('Cliente desconectado:', socket.id);
   });
 });
 
-// Puerto - Render asigna el puerto automáticamente via PORT
+// Funciones helper para emitir eventos
+export const emitOrderUpdate = (orderId, data) => {
+  io.to(`order-${orderId}`).emit('order-updated', data);
+};
+
+export const emitNewOrder = (restaurantId, order) => {
+  io.to(`restaurant-${restaurantId}`).emit('new-order', order);
+  io.to('admin-dashboard').emit('new-order', order);
+};
+
+export const emitReservationUpdate = (restaurantId, reservation) => {
+  io.to(`restaurant-${restaurantId}`).emit('reservation-updated', reservation);
+};
+
+// Puerto - Railway asigna el puerto automáticamente via PORT
 const PORT = process.env.PORT || 3000;
 
 httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
   console.log(`📍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 CORS habilitado para: ${allowedOrigins.join(', ')}`);
+  console.log(`🌐 CORS habilitado`);
+  console.log(`📱 WhatsApp webhook: /api/whatsapp/webhook`);
 });
 
 export { app, io };
