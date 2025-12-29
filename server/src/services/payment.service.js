@@ -4,14 +4,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Check if in simulated mode
+const IS_SIMULATED_MODE = !process.env.MERCADOPAGO_ACCESS_TOKEN && !process.env.WOMPI_PRIVATE_KEY;
+
 // MercadoPago Configuration
-const mpClient = new MercadoPagoConfig({
+const mpClient = process.env.MERCADOPAGO_ACCESS_TOKEN ? new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
   options: { timeout: 5000 }
-});
+}) : null;
 
-const mpPreference = new Preference(mpClient);
-const mpPayment = new Payment(mpClient);
+const mpPreference = mpClient ? new Preference(mpClient) : null;
+const mpPayment = mpClient ? new Payment(mpClient) : null;
 
 // Wompi Configuration (para PSE y Nequi en Colombia)
 const WOMPI_API_URL = process.env.NODE_ENV === 'production'
@@ -19,6 +22,15 @@ const WOMPI_API_URL = process.env.NODE_ENV === 'production'
   : 'https://sandbox.wompi.co/v1';
 const WOMPI_PUBLIC_KEY = process.env.WOMPI_PUBLIC_KEY;
 const WOMPI_PRIVATE_KEY = process.env.WOMPI_PRIVATE_KEY;
+
+// In-memory storage for simulated payments
+const simulatedPayments = new Map();
+
+// Helper to generate fake IDs
+const generateFakeId = (prefix) => `${prefix}_simulated_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+// Simulated payment delays (in ms)
+const SIMULATED_DELAY = 2000;
 
 class PaymentService {
   constructor() {
@@ -29,6 +41,34 @@ class PaymentService {
   // ==================== MERCADO PAGO ====================
 
   async createMercadoPagoPreference(order, user) {
+    // SIMULATED MODE
+    if (IS_SIMULATED_MODE) {
+      console.log('🧪 [SIMULATED PAYMENT] Creating MercadoPago preference for order:', order.trackingNumber);
+
+      const preferenceId = generateFakeId('mp_pref');
+      const initPoint = `${process.env.CLIENT_URL}/checkout/simulated?preference=${preferenceId}&order=${order.trackingNumber}`;
+
+      simulatedPayments.set(preferenceId, {
+        id: preferenceId,
+        orderId: order.id,
+        trackingNumber: order.trackingNumber,
+        amount: order.total,
+        status: 'pending',
+        provider: 'mercadopago',
+        createdAt: Date.now()
+      });
+
+      return {
+        success: true,
+        provider: 'mercadopago',
+        preferenceId,
+        initPoint,
+        sandboxInitPoint: initPoint,
+        isSimulated: true
+      };
+    }
+
+    // REAL MODE
     try {
       const items = order.items.map(item => ({
         id: item.id.toString(),
@@ -128,6 +168,36 @@ class PaymentService {
   }
 
   async createWompiTransaction(order, paymentMethod, additionalData = {}) {
+    // SIMULATED MODE
+    if (IS_SIMULATED_MODE) {
+      console.log(`🧪 [SIMULATED PAYMENT] Creating Wompi ${paymentMethod} transaction for order:`, order.trackingNumber);
+
+      const transactionId = generateFakeId('wompi_tx');
+      const redirectUrl = `${process.env.CLIENT_URL}/checkout/simulated?transaction=${transactionId}&order=${order.trackingNumber}&method=${paymentMethod}`;
+
+      simulatedPayments.set(transactionId, {
+        id: transactionId,
+        orderId: order.id,
+        trackingNumber: order.trackingNumber,
+        amount: order.total,
+        status: 'PENDING',
+        provider: 'wompi',
+        paymentMethod,
+        createdAt: Date.now()
+      });
+
+      return {
+        success: true,
+        provider: 'wompi',
+        transactionId,
+        status: 'PENDING',
+        redirectUrl,
+        reference: order.trackingNumber,
+        isSimulated: true
+      };
+    }
+
+    // REAL MODE
     try {
       const acceptanceToken = await this.getWompiAcceptanceToken();
 
@@ -374,6 +444,43 @@ class PaymentService {
     };
 
     return statusMap[provider]?.[status] || 'unknown';
+  }
+
+  // ==================== SIMULATED MODE HELPERS ====================
+
+  isSimulatedMode() {
+    return IS_SIMULATED_MODE;
+  }
+
+  async confirmSimulatedPayment(paymentId) {
+    if (!IS_SIMULATED_MODE) {
+      throw new Error('Not in simulated mode');
+    }
+
+    const payment = simulatedPayments.get(paymentId);
+    if (!payment) {
+      throw new Error('Simulated payment not found');
+    }
+
+    console.log('✅ [SIMULATED PAYMENT] Confirming payment:', paymentId);
+
+    // Update payment status
+    payment.status = payment.provider === 'mercadopago' ? 'approved' : 'APPROVED';
+    payment.finalizedAt = Date.now();
+    simulatedPayments.set(paymentId, payment);
+
+    return {
+      success: true,
+      paymentId,
+      orderId: payment.orderId,
+      trackingNumber: payment.trackingNumber,
+      status: this.normalizeStatus(payment.status, payment.provider),
+      provider: payment.provider
+    };
+  }
+
+  getSimulatedPayment(paymentId) {
+    return simulatedPayments.get(paymentId);
   }
 }
 

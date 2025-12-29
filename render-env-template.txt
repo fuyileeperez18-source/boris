@@ -1,0 +1,82 @@
+# ========================================
+# RENDER - Variables de Entorno (Server)
+# ========================================
+#
+# Copia estas variables en Render Dashboard:
+# https://dashboard.render.com → Tu Servicio → Environment
+#
+# ⚠️  IMPORTANTE: Reemplaza los valores de ejemplo con tus credenciales reales
+# ========================================
+
+# Server Configuration
+PORT=3000
+NODE_ENV=production
+API_URL=https://CAMBIA-ESTO-tu-servicio.onrender.com
+CLIENT_URL=https://CAMBIA-ESTO-tu-app.vercel.app
+
+# Database (Supabase PostgreSQL)
+# Obtén esto desde: https://supabase.com/dashboard/project/tu-project/settings/database
+DATABASE_URL=postgresql://postgres.xxxx:TU_PASSWORD@aws-0-us-west-1.pooler.supabase.com:6543/postgres
+
+# Supabase
+# Obtén esto desde: https://supabase.com/dashboard/project/tu-project/settings/api
+SUPABASE_URL=https://xxxx.supabase.co
+SUPABASE_ANON_KEY=eyJhbGc...TU_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...TU_SERVICE_ROLE_KEY
+
+# JWT - Genera un secret fuerte con: openssl rand -base64 32
+JWT_SECRET=TU_JWT_SECRET_SUPER_SEGURO_AQUI
+JWT_EXPIRES_IN=7d
+JWT_REFRESH_EXPIRES_IN=30d
+
+# MercadoPago (Colombia)
+# https://www.mercadopago.com.co/developers
+MERCADOPAGO_ACCESS_TOKEN=APP_USR-xxxx-tu-access-token
+MERCADOPAGO_PUBLIC_KEY=APP_USR-xxxx-tu-public-key
+
+# Wompi (PSE, Nequi - Colombia)
+# https://comercios.wompi.co/
+WOMPI_PUBLIC_KEY=pub_test_xxxx_o_pub_prod_xxxx
+WOMPI_PRIVATE_KEY=prv_test_xxxx_o_prv_prod_xxxx
+WOMPI_EVENTS_SECRET=tu_events_secret
+
+# WhatsApp Business API (Meta)
+# https://developers.facebook.com/apps/
+WHATSAPP_PHONE_NUMBER_ID=123456789012345
+WHATSAPP_ACCESS_TOKEN=EAAxxxx_tu_access_token
+WHATSAPP_VERIFY_TOKEN=tu_verify_token_personalizado
+WHATSAPP_BUSINESS_ACCOUNT_ID=123456789012345
+
+# Email (Opcional - Gmail)
+# Usa App Password: https://myaccount.google.com/apppasswords
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu_email@gmail.com
+SMTP_PASS=tu_app_password_de_16_caracteres
+EMAIL_FROM=Mar de Sabores <noreply@mardesabores.com>
+
+# Google Maps (Opcional)
+# https://console.cloud.google.com/apis/credentials
+GOOGLE_MAPS_API_KEY=AIzaSy_tu_google_maps_api_key
+
+# Cloudinary (Opcional - para uploads de imágenes)
+# https://cloudinary.com/console
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=123456789012345
+CLOUDINARY_API_SECRET=tu_api_secret
+
+# ========================================
+# PASOS PARA CONFIGURAR EN RENDER:
+# ========================================
+# 1. Ve a https://dashboard.render.com
+# 2. Selecciona tu servicio (Web Service)
+# 3. Ve a "Environment" en el menú lateral
+# 4. Haz clic en "Add Environment Variable"
+# 5. Copia y pega cada variable con su valor
+# 6. Guarda los cambios
+# 7. Render redesplegará automáticamente tu servicio
+#
+# ⚠️  IMPORTANTE:
+# - No compartas las variables PRIVATE_KEY, SERVICE_ROLE_KEY, JWT_SECRET
+# - Usa diferentes valores para desarrollo y producción
+# - Guarda estas credenciales en un lugar seguro (1Password, LastPass, etc.)

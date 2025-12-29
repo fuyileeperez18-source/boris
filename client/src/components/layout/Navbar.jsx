@@ -57,7 +57,7 @@ const Navbar = () => {
   ];
 
   const navbarBg = isHomePage && !isScrolled
-    ? 'bg-transparent'
+    ? 'bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm'
     : 'bg-white shadow-md';
 
   const textColor = isHomePage && !isScrolled
