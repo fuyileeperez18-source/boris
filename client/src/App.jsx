@@ -6,6 +6,9 @@ import { CartProvider } from './context/CartContext';
 // Layout
 import Layout from './components/layout/Layout';
 
+// Chat Widget
+import ChatWidget from './components/chat/ChatWidget';
+
 // Páginas públicas
 import HomePage from './pages/public/HomePage';
 import MenuPage from './pages/public/MenuPage';
@@ -42,6 +45,7 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <Router>
+          <ChatWidget />
           <Toaster
             position="top-right"
             toastOptions={{

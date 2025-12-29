@@ -47,6 +47,21 @@
   --color-ocean-600: #234b73;
 }
 
+/* Dark Mode */
+:root.dark {
+  --color-gray-50: #1f2937;
+  --color-gray-100: #374151;
+  --color-gray-200: #4b5563;
+  --color-gray-300: #6b7280;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+}
+
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;
@@ -54,7 +69,11 @@
   }
 
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased transition-colors duration-300;
+  }
+
+  html.dark body {
+    @apply bg-gray-900 text-gray-100;
   }
 
   h1, h2, h3, h4, h5, h6 {

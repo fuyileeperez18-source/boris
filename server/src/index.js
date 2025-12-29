@@ -21,6 +21,12 @@ import deliveryRoutes from './routes/delivery.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import whatsappRoutes from './routes/whatsapp.routes.js';
 import analyticsRoutes from './routes/analytics.routes.js';
+import reviewRoutes from './routes/review.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
+import wishlistRoutes from './routes/wishlist.routes.js';
+import settingsRoutes from './routes/settings.routes.js';
+import commissionRoutes from './routes/commission.routes.js';
 
 // Importar middlewares
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -104,7 +110,7 @@ app.set('io', io);
 // Ruta raíz
 app.get('/', (req, res) => {
   res.json({
-    name: 'Mar de Sabores API',
+    name: 'BORIS API',
     version: '2.0.0',
     status: 'running',
     environment: process.env.NODE_ENV || 'development',
@@ -144,6 +150,12 @@ app.use('/api/delivery', deliveryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/commissions', commissionRoutes);
 
 // Manejo de rutas no encontradas
 app.use(notFound);
@@ -179,10 +191,27 @@ io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} unido a delivery-${deliveryId}`);
   });
 
+  // Unirse a sala de usuario (para notificaciones)
+  socket.on('join-user', (userId) => {
+    socket.join(`user-${userId}`);
+    console.log(`Socket ${socket.id} unido a user-${userId}`);
+  });
+
   // Actualización de ubicación de domiciliario
   socket.on('delivery-location-update', (data) => {
     const { orderId, location } = data;
     io.to(`order-${orderId}`).emit('delivery-location', location);
+  });
+
+  // Unirse a sala de chat
+  socket.on('join-chat', (conversationId) => {
+    socket.join(`chat-${conversationId}`);
+    console.log(`Socket ${socket.id} unido a chat-${conversationId}`);
+  });
+
+  // Enviar mensaje de chat
+  socket.on('chat-message', (data) => {
+    io.to(`chat-${data.conversationId}`).emit('new-message', data.message);
   });
 
   socket.on('disconnect', () => {

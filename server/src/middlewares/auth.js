@@ -16,7 +16,7 @@ export const authenticate = async (req, res, next) => {
 
     // Verificar que el usuario existe
     const result = await query(
-      'SELECT id, email, name, role FROM users WHERE id = $1',
+      'SELECT id, email, name, role, restaurant_id FROM users WHERE id = $1',
       [decoded.userId]
     );
 

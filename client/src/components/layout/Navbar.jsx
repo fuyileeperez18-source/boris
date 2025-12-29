@@ -117,7 +117,7 @@ const Navbar = () => {
               </div>
               <div>
                 <span className={`font-serif font-bold text-xl block leading-tight ${logoColor}`}>
-                  Mar de Sabores
+                  BORIS
                 </span>
                 <span className={`text-xs ${
                   isHomePage && !isScrolled ? 'text-primary-200' : 'text-gray-500'

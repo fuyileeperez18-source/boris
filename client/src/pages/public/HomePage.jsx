@@ -483,7 +483,7 @@ const HomePage = () => {
                 Tradición Marinera desde 2009
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Mar de Sabores nació del amor por el mar y la gastronomía caribeña.
+                BORIS nació del amor por el mar y la gastronomía caribeña.
                 Cada día, nuestros pescadores artesanales traen los mariscos más frescos
                 directamente del mar a nuestra cocina.
               </p>

@@ -426,7 +426,7 @@ const MenuPage = () => {
 
   const handleAddToCart = (item) => {
     const qty = quantities[item.id] || 1;
-    addItem(item, { id: 1, name: 'Mar de Sabores' }, qty);
+    addItem(item, { id: 1, name: 'BORIS' }, qty);
     toast.success(`${qty}x ${item.name} agregado al carrito`);
     setQuantities(prev => ({ ...prev, [item.id]: 1 }));
   };

@@ -201,3 +201,161 @@ export const adminService = {
   rejectRestaurant: (id, reason) => api.put(`/admin/restaurants/${id}/reject`, { reason }),
   suspendRestaurant: (id, reason) => api.put(`/admin/restaurants/${id}/suspend`, { reason }),
 };
+
+// ===== Servicios de Reseñas =====
+export const reviewService = {
+  getProductReviews: (productId, params) => api.get(`/reviews/product/${productId}`, { params }),
+  getProductRatingSummary: (productId) => api.get(`/reviews/product/${productId}/rating-summary`),
+  getMyReviews: () => api.get('/reviews/my-reviews'),
+  createReview: (data) => api.post('/reviews', data),
+  updateReview: (reviewId, data) => api.put(`/reviews/${reviewId}`, data),
+  deleteReview: (reviewId) => api.delete(`/reviews/${reviewId}`),
+  getAllReviews: (params) => api.get('/reviews', { params }),
+  moderateReview: (reviewId, status) => api.patch(`/reviews/${reviewId}/status`, { status }),
+};
+
+// ===== Servicios de Upload =====
+export const uploadService = {
+  uploadImage: (file, folder = 'boris') => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('folder', folder);
+    return api.post('/upload/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  uploadMultipleImages: (files, folder = 'boris') => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('images', file));
+    formData.append('folder', folder);
+    return api.post('/upload/images', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  uploadProductImage: (productId, file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    return api.post(`/upload/product/${productId}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  deleteImage: (publicId) => api.delete(`/upload/image/${publicId}`),
+};
+
+// ===== Servicios de Notificaciones =====
+export const notificationService = {
+  getMyNotifications: (params) => api.get('/notifications', { params }),
+  getUnreadCount: () => api.get('/notifications/unread-count'),
+  markAsRead: (notificationId) => api.patch(`/notifications/${notificationId}/read`),
+  markAllAsRead: () => api.patch('/notifications/read-all'),
+  deleteNotification: (notificationId) => api.delete(`/notifications/${notificationId}`),
+  clearAll: () => api.delete('/notifications'),
+};
+
+// ===== Servicios de Wishlist =====
+export const wishlistService = {
+  getMyWishlist: () => api.get('/wishlist'),
+  addToWishlist: (productId) => api.post(`/wishlist/${productId}`),
+  removeFromWishlist: (productId) => api.delete(`/wishlist/${productId}`),
+  checkInWishlist: (productId) => api.get(`/wishlist/check/${productId}`),
+  clearWishlist: () => api.delete('/wishlist'),
+};
+
+// ===== Servicios de Settings =====
+export const settingsService = {
+  getSettings: () => api.get('/settings'),
+  updateSettings: (data) => api.put('/settings', data),
+  exportToCSV: (type, params) => api.get(`/settings/export/csv`, { params: { type, ...params }, responseType: 'blob' }),
+};
+
+// ===== Servicios de Comisiones =====
+export const commissionService = {
+  getMyCommissions: (params) => api.get('/commissions/my-commissions', { params }),
+  getMySummary: () => api.get('/commissions/my-summary'),
+  getAllCommissions: (params) => api.get('/commissions', { params }),
+  getSummary: () => api.get('/commissions/summary'),
+  getTeamMembers: () => api.get('/commissions/team-members'),
+  createTeamMember: (data) => api.post('/commissions/team-members', data),
+  updateTeamMember: (memberId, data) => api.put(`/commissions/team-members/${memberId}`, data),
+  updateCommissionStatus: (commissionId, status) => api.patch(`/commissions/${commissionId}/status`, { status }),
+  recordPayment: (data) => api.post('/commissions/payments', data),
+};
+
+// ===== Servicios de Chat =====
+export const chatService = {
+  getConversations: () => api.get('/chat/conversations'),
+  getMessages: (conversationId) => api.get(`/chat/conversations/${conversationId}/messages`),
+  sendMessage: (conversationId, data) => api.post(`/chat/conversations/${conversationId}/messages`, data),
+  createConversation: (data) => api.post('/chat/conversations', data),
+  markAsRead: (conversationId) => api.post(`/chat/conversations/${conversationId}/read`),
+  updateStatus: (conversationId, status) => api.patch(`/chat/conversations/${conversationId}/status`, { status }),
+  editMessage: (messageId, data) => api.put(`/chat/messages/${messageId}`, data),
+  deleteMessage: (messageId) => api.delete(`/chat/messages/${messageId}`),
+};
+
+// ===== Socket Service =====
+import { io } from 'socket.io-client';
+
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
+
+class SocketService {
+  constructor() {
+    this.socket = null;
+  }
+
+  connect(token) {
+    if (this.socket?.connected) return;
+
+    this.socket = io(SOCKET_URL, {
+      auth: { token },
+      transports: ['websocket', 'polling'],
+    });
+
+    this.socket.on('connect', () => {
+      console.log('Socket conectado:', this.socket.id);
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('Socket desconectado');
+    });
+
+    this.socket.on('connect_error', (error) => {
+      console.error('Error de conexión socket:', error.message);
+    });
+
+    return this.socket;
+  }
+
+  disconnect() {
+    if (this.socket) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
+  }
+
+  joinRoom(room) {
+    if (this.socket) {
+      this.socket.emit(`join-${room.type}`, room.id);
+    }
+  }
+
+  sendMessage(data) {
+    if (this.socket) {
+      this.socket.emit('chat-message', data);
+    }
+  }
+
+  on(event, callback) {
+    if (this.socket) {
+      this.socket.on(event, callback);
+    }
+  }
+
+  off(event, callback) {
+    if (this.socket) {
+      this.socket.off(event, callback);
+    }
+  }
+}
+
+export const socketService = new SocketService();

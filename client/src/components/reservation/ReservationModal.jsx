@@ -380,7 +380,7 @@ const ReservationModal = ({ isOpen, onClose }) => {
                   </div>
 
                   <p className="text-sm text-gray-500 mt-6">
-                    Te esperamos en <strong>Mar de Sabores</strong><br />
+                    Te esperamos en <strong>BORIS</strong><br />
                     Calle del Arsenal #10-43, Centro Histórico
                   </p>
                 </div>

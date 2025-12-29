@@ -104,7 +104,7 @@ const Footer = () => {
               </div>
               <div>
                 <span className="font-serif font-bold text-xl block leading-tight">
-                  Mar de Sabores
+                  BORIS
                 </span>
                 <span className="text-xs text-primary-300">
                   Restaurante de Mariscos
@@ -113,7 +113,7 @@ const Footer = () => {
             </Link>
 
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Desde 2009, ofrecemos los mejores mariscos frescos del Caribe colombiano.
+              BORIS - Tu destino para los mejores mariscos del Caribe colombiano.
               Una experiencia gastronómica única en el corazón de Cartagena.
             </p>
 
@@ -215,8 +215,8 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium">Email</p>
-                  <a href="mailto:info@mardesabores.com" className="text-gray-400 text-sm hover:text-primary-400 transition-colors">
-                    info@mardesabores.com
+                  <a href="mailto:info@boris.com.co" className="text-gray-400 text-sm hover:text-primary-400 transition-colors">
+                    info@boris.com.co
                   </a>
                 </div>
               </div>
@@ -265,7 +265,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm text-center md:text-left">
-              © {currentYear} Mar de Sabores. Todos los derechos reservados.
+              © {currentYear} BORIS - Restaurante de Mariscos. Todos los derechos reservados.
             </p>
 
             <div className="flex flex-wrap justify-center gap-6 text-sm">

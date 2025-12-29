@@ -305,7 +305,7 @@ class WhatsAppService {
       `- ${item.quantity}x ${item.name}: $${item.price.toLocaleString()}`
     ).join('\n');
 
-    const message = `*Confirmación de Pedido - Mar de Sabores*
+    const message = `*Confirmación de Pedido - BORIS*
 
 Pedido #${order.trackingNumber}
 
@@ -360,7 +360,7 @@ ${status === 'on_the_way' && order.driverPhone
 
   // Send reservation confirmation
   async sendReservationConfirmation(to, reservation) {
-    const message = `*Confirmación de Reserva - Mar de Sabores*
+    const message = `*Confirmación de Reserva - BORIS*
 
 Tu reserva ha sido confirmada.
 
@@ -384,7 +384,7 @@ _Si necesitas modificar o cancelar tu reserva, responde a este mensaje._`;
       to,
       10.4236,
       -75.5499,
-      'Mar de Sabores',
+      'BORIS',
       'Calle del Arsenal #10-43, Centro Histórico, Cartagena'
     );
   }
@@ -414,7 +414,7 @@ _Si necesitas modificar o cancelar tu reserva, responde a este mensaje._`;
 
     return this.sendListMessage(
       to,
-      'Mar de Sabores',
+      'BORIS',
       '¡Bienvenido! ¿Qué deseas hacer hoy?',
       'Ver Opciones',
       sections
@@ -425,7 +425,7 @@ _Si necesitas modificar o cancelar tu reserva, responde a este mensaje._`;
   async sendWelcomeMessage(to, name) {
     const message = `¡Hola${name ? ` ${name}` : ''}!
 
-Bienvenido a *Mar de Sabores*, el mejor restaurante de mariscos de Cartagena.
+Bienvenido a *BORIS*, el mejor restaurante de mariscos de Cartagena.
 
 ¿En qué podemos ayudarte?`;
 

@@ -140,7 +140,7 @@ class ChatbotService {
 
     if (lowerText.includes('horario')) {
       return await whatsappService.sendTextMessage(from,
-        '*Horarios de Mar de Sabores:*\n\nLunes a Domingo: 11:00 AM - 10:00 PM\nViernes y Sábado: 11:00 AM - 11:00 PM'
+        '*Horarios de BORIS:*\n\nLunes a Domingo: 11:00 AM - 10:00 PM\nViernes y Sábado: 11:00 AM - 11:00 PM'
       );
     }
 
@@ -149,7 +149,7 @@ class ChatbotService {
         from,
         10.4236,
         -75.5499,
-        'Mar de Sabores',
+        'BORIS',
         'Calle del Arsenal #10-43, Centro Histórico, Cartagena'
       );
     }
@@ -526,7 +526,7 @@ class ChatbotService {
   // Send price info
   async sendPriceInfo(from) {
     return await whatsappService.sendTextMessage(from,
-      `*Rangos de Precios - Mar de Sabores*\n\nCeviches: $38,000 - $48,000\nMariscos: $42,000 - $125,000\nLangosta: $125,000 - $145,000\nPescados: $58,000 - $75,000\nArroces: $48,000 - $65,000\n\nEnvío: $8,000 (Cartagena)\n\n¿Te gustaría ver el menú completo?`
+      `*Rangos de Precios - BORIS*\n\nCeviches: $38,000 - $48,000\nMariscos: $42,000 - $125,000\nLangosta: $125,000 - $145,000\nPescados: $58,000 - $75,000\nArroces: $48,000 - $65,000\n\nEnvío: $8,000 (Cartagena)\n\n¿Te gustaría ver el menú completo?`
     );
   }
 }

