@@ -56,17 +56,11 @@ const Navbar = () => {
     { href: '/contacto', label: 'Contacto' },
   ];
 
-  const navbarBg = isHomePage && !isScrolled
-    ? 'bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm'
-    : 'bg-white shadow-md';
+  const navbarBg = 'bg-white shadow-md';
 
-  const textColor = isHomePage && !isScrolled
-    ? 'text-white'
-    : 'text-gray-700';
+  const textColor = 'text-gray-700';
 
-  const logoColor = isHomePage && !isScrolled
-    ? 'text-white'
-    : 'text-primary-600';
+  const logoColor = 'text-primary-600';
 
   return (
     <>
@@ -106,22 +100,14 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                isHomePage && !isScrolled
-                  ? 'bg-white/20 backdrop-blur-sm group-hover:bg-white/30'
-                  : 'bg-primary-100 group-hover:bg-primary-200'
-              }`}>
-                <Fish className={`w-7 h-7 ${
-                  isHomePage && !isScrolled ? 'text-white' : 'text-primary-600'
-                }`} />
+              <div className="w-12 h-12 rounded-xl bg-primary-100 group-hover:bg-primary-200 flex items-center justify-center transition-all duration-300">
+                <Fish className="w-7 h-7 text-primary-600" />
               </div>
               <div>
-                <span className={`font-serif font-bold text-xl block leading-tight ${logoColor}`}>
+                <span className="font-serif font-bold text-xl block leading-tight text-primary-600">
                   BORIS
                 </span>
-                <span className={`text-xs ${
-                  isHomePage && !isScrolled ? 'text-primary-200' : 'text-gray-500'
-                }`}>
+                <span className="text-xs text-gray-500">
                   Restaurante de Mariscos
                 </span>
               </div>
@@ -146,13 +132,9 @@ const Navbar = () => {
               {/* Cart */}
               <Link
                 to="/carrito"
-                className={`relative p-2 rounded-full transition-colors ${
-                  isHomePage && !isScrolled
-                    ? 'hover:bg-white/20'
-                    : 'hover:bg-gray-100'
-                }`}
+                className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
-                <ShoppingCart className={`w-6 h-6 ${textColor}`} />
+                <ShoppingCart className="w-6 h-6 text-gray-700" />
                 {itemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
                     {itemCount > 99 ? '99+' : itemCount}
@@ -165,25 +147,15 @@ const Navbar = () => {
                 <div className="relative profile-dropdown">
                   <button
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className={`flex items-center gap-2 p-2 rounded-full transition-colors ${
-                      isHomePage && !isScrolled
-                        ? 'hover:bg-white/20'
-                        : 'hover:bg-gray-100'
-                    }`}
+                    className="flex items-center gap-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      isHomePage && !isScrolled
-                        ? 'bg-white/20'
-                        : 'bg-primary-100'
-                    }`}>
-                      <User className={`w-5 h-5 ${
-                        isHomePage && !isScrolled ? 'text-white' : 'text-primary-600'
-                      }`} />
+                    <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                      <User className="w-5 h-5 text-primary-600" />
                     </div>
-                    <span className={`text-sm font-medium ${textColor}`}>
+                    <span className="text-sm font-medium text-gray-700">
                       {user?.name?.split(' ')[0]}
                     </span>
-                    <ChevronDown className={`w-4 h-4 ${textColor}`} />
+                    <ChevronDown className="w-4 h-4 text-gray-700" />
                   </button>
 
                   {isProfileOpen && (
@@ -269,10 +241,7 @@ const Navbar = () => {
               ) : (
                 <div className="flex items-center gap-2">
                   <Link to="/login">
-                    <Button
-                      variant="ghost"
-                      className={isHomePage && !isScrolled ? '!text-white hover:!bg-white/20' : ''}
-                    >
+                    <Button variant="ghost">
                       Ingresar
                     </Button>
                   </Link>
@@ -305,16 +274,12 @@ const Navbar = () => {
               </Link>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`p-2 rounded-lg ${
-                  isHomePage && !isScrolled
-                    ? 'hover:bg-white/20'
-                    : 'hover:bg-gray-100'
-                }`}
+                className="p-2 rounded-lg hover:bg-gray-100"
               >
                 {isMenuOpen ? (
-                  <X className={`w-6 h-6 ${textColor}`} />
+                  <X className="w-6 h-6 text-gray-700" />
                 ) : (
-                  <Menu className={`w-6 h-6 ${textColor}`} />
+                  <Menu className="w-6 h-6 text-gray-700" />
                 )}
               </button>
             </div>
