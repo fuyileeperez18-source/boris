@@ -114,15 +114,15 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-ocean-900 text-white hidden lg:flex flex-col">
-        <div className="p-6 border-b border-ocean-800">
+      <aside className="w-64 bg-white border-r border-gray-200 shadow-lg hidden lg:flex flex-col">
+        <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-              <Utensils className="h-6 w-6" />
+            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
+              <Utensils className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg">BORIS</h1>
-              <p className="text-xs text-ocean-300">Panel de Administración</p>
+              <h1 className="font-bold text-lg text-black">BORIS</h1>
+              <p className="text-xs text-gray-600">Panel de Administración</p>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('overview')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'overview' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'overview' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <BarChart3 className="h-5 w-5" />
@@ -140,7 +140,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('orders')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'orders' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'orders' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <ShoppingBag className="h-5 w-5" />
@@ -150,7 +150,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('products')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'products' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'products' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <Package className="h-5 w-5" />
@@ -159,7 +159,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('users')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'users' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'users' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <Users className="h-5 w-5" />
@@ -168,7 +168,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('reservations')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'reservations' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'reservations' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <Calendar className="h-5 w-5" />
@@ -177,7 +177,7 @@ const Dashboard = () => {
           <button
             onClick={() => setActiveTab('analytics')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'analytics' ? 'bg-white/20 text-white' : 'text-ocean-300 hover:bg-white/10'
+              activeTab === 'analytics' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <TrendingUp className="h-5 w-5" />
@@ -185,17 +185,17 @@ const Dashboard = () => {
           </button>
         </nav>
 
-        <div className="p-4 border-t border-ocean-800">
+        <div className="p-4 border-t border-gray-200">
           <Link
             to="/admin/settings"
-            className="flex items-center gap-3 px-4 py-3 text-ocean-300 hover:bg-white/10 rounded-xl transition-colors"
+            className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
           >
             <Settings className="h-5 w-5" />
             <span>Configuración</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-500/20 rounded-xl transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
           >
             <LogOut className="h-5 w-5" />
             <span>Cerrar Sesión</span>
@@ -229,7 +229,7 @@ const Dashboard = () => {
                 <RefreshCw className={`h-5 w-5 text-gray-500 ${isLoading ? 'animate-spin' : ''}`} />
               </button>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-ocean-600 rounded-full flex items-center justify-center text-white font-medium">
+                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-medium">
                   {user?.name?.[0] || 'A'}
                 </div>
               </div>
@@ -352,7 +352,7 @@ const Dashboard = () => {
                     {mockSalesData.map((day, index) => (
                       <div key={index} className="flex-1 flex flex-col items-center gap-2">
                         <div
-                          className="w-full bg-ocean-500 rounded-t-lg transition-all duration-500"
+                          className="w-full bg-black rounded-t-lg transition-all duration-500 hover:bg-gray-800"
                           style={{ height: `${(day.value / maxSalesValue) * 100}%` }}
                         />
                         <span className="text-xs text-gray-500">{day.label}</span>
@@ -365,12 +365,12 @@ const Dashboard = () => {
                 <div className="bg-white rounded-2xl p-6 shadow-sm border">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="font-semibold text-gray-900">Top Productos</h3>
-                    <button className="text-ocean-600 text-sm hover:underline">Ver todos</button>
+                    <button className="text-black text-sm hover:underline">Ver todos</button>
                   </div>
                   <div className="space-y-4">
                     {mockTopProducts.slice(0, 5).map((product, index) => (
                       <div key={index} className="flex items-center gap-4">
-                        <div className="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center text-ocean-600 font-medium text-sm">
+                        <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black font-medium text-sm">
                           {index + 1}
                         </div>
                         <div className="flex-1 min-w-0">

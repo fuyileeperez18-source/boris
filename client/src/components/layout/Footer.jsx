@@ -58,27 +58,27 @@ const Footer = () => {
 
       {/* Newsletter Section */}
       <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-3xl p-8 md:p-12 backdrop-blur-sm border border-white/10">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="bg-gradient-to-r from-primary-600/20 to-secondary-500/20 rounded-3xl p-6 sm:p-8 md:p-12 backdrop-blur-sm border border-white/10">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
               <div>
-                <h3 className="text-2xl md:text-3xl font-serif font-bold mb-3">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-2 sm:mb-3">
                   Suscríbete a Nuestro Newsletter
                 </h3>
-                <p className="text-gray-300">
+                <p className="text-sm sm:text-base text-gray-300">
                   Recibe promociones exclusivas, nuevos platos y eventos especiales.
                 </p>
               </div>
               <div>
-                <form className="flex gap-3">
+                <form className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="email"
                     placeholder="Tu correo electrónico"
-                    className="flex-1 px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+                    className="flex-1 px-4 sm:px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent text-sm sm:text-base w-full"
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-secondary-500 hover:bg-secondary-600 text-white rounded-full font-medium transition-colors flex items-center gap-2"
+                    className="px-6 py-3 bg-secondary-500 hover:bg-secondary-600 text-white rounded-full font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap flex-shrink-0 w-full sm:w-auto"
                   >
                     Suscribir
                     <ArrowRight className="w-4 h-4" />
