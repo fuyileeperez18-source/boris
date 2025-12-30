@@ -4,7 +4,7 @@ import {
   BarChart3, Users, ShoppingBag, DollarSign, TrendingUp,
   Package, Clock, MapPin, Star, Calendar, ArrowUpRight,
   ArrowDownRight, RefreshCw, Settings, LogOut, ChevronRight,
-  Utensils, Truck, Receipt
+  Utensils, Truck, Receipt, Fish
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { socketService } from '../../services/socket';
@@ -114,24 +114,26 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 shadow-lg hidden lg:flex flex-col">
-        <div className="p-6 border-b border-gray-200">
+      <aside className="w-64 bg-white border-r border-gray-200 shadow-xl hidden lg:flex flex-col">
+        <div className="p-6 border-b border-gray-200 bg-gradient-to-br from-primary-50 to-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
-              <Utensils className="h-6 w-6 text-white" />
+            <div className="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Fish className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-black">BORIS</h1>
-              <p className="text-xs text-gray-600">Panel de Administración</p>
+              <h1 className="font-serif font-bold text-xl text-primary-600">BORIS</h1>
+              <p className="text-xs text-gray-500">Panel de Administración</p>
             </div>
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-2">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'overview' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'overview'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <BarChart3 className="h-5 w-5" />
@@ -139,18 +141,22 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'orders' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'orders'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <ShoppingBag className="h-5 w-5" />
             <span>Pedidos</span>
-            <span className="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+            <span className="ml-auto bg-accent-500 text-white text-xs px-2 py-1 rounded-full shadow-md">12</span>
           </button>
           <button
             onClick={() => setActiveTab('products')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'products' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'products'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <Package className="h-5 w-5" />
@@ -158,8 +164,10 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'users' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'users'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <Users className="h-5 w-5" />
@@ -167,8 +175,10 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('reservations')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'reservations' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'reservations'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <Calendar className="h-5 w-5" />
@@ -176,8 +186,10 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-              activeTab === 'analytics' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+              activeTab === 'analytics'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg transform hover:scale-105'
+                : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
             }`}
           >
             <TrendingUp className="h-5 w-5" />
@@ -185,17 +197,17 @@ const Dashboard = () => {
           </button>
         </nav>
 
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-gray-200 bg-gray-50">
           <Link
             to="/admin/settings"
-            className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
+            className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-white hover:text-primary-600 rounded-xl transition-all duration-300 font-medium mb-2"
           >
             <Settings className="h-5 w-5" />
             <span>Configuración</span>
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-accent-600 hover:bg-accent-50 rounded-xl transition-all duration-300 font-medium"
           >
             <LogOut className="h-5 w-5" />
             <span>Cerrar Sesión</span>
@@ -204,12 +216,12 @@ const Dashboard = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto bg-gradient-to-br from-gray-50 to-primary-50/20">
         {/* Header */}
-        <header className="bg-white border-b px-8 py-4 sticky top-0 z-10">
+        <header className="bg-white/80 backdrop-blur-lg border-b border-gray-200 px-8 py-6 sticky top-0 z-10 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-3xl font-serif font-bold text-gray-900 mb-1">
                 {activeTab === 'overview' && 'Resumen General'}
                 {activeTab === 'orders' && 'Gestión de Pedidos'}
                 {activeTab === 'products' && 'Gestión del Menú'}
@@ -217,19 +229,20 @@ const Dashboard = () => {
                 {activeTab === 'reservations' && 'Reservas'}
                 {activeTab === 'analytics' && 'Analytics'}
               </h1>
-              <p className="text-gray-500 text-sm">
+              <p className="text-gray-600 text-sm flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 Bienvenido, {user?.name || 'Administrador'}
               </p>
             </div>
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsLoading(true)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-3 hover:bg-primary-50 rounded-xl transition-all duration-300 hover:scale-105"
               >
-                <RefreshCw className={`h-5 w-5 text-gray-500 ${isLoading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`h-5 w-5 text-primary-600 ${isLoading ? 'animate-spin' : ''}`} />
               </button>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-medium">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                   {user?.name?.[0] || 'A'}
                 </div>
               </div>
@@ -244,13 +257,15 @@ const Dashboard = () => {
               {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {/* Total Sales */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl border border-primary-100 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                      <DollarSign className="h-6 w-6 text-green-600" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <DollarSign className="h-7 w-7 text-white" />
                     </div>
-                    <span className={`flex items-center gap-1 text-sm ${
-                      stats.salesChange >= 0 ? 'text-green-600' : 'text-red-600'
+                    <span className={`flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full ${
+                      stats.salesChange >= 0
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
                     }`}>
                       {stats.salesChange >= 0 ? (
                         <ArrowUpRight className="h-4 w-4" />
@@ -260,20 +275,22 @@ const Dashboard = () => {
                       {Math.abs(stats.salesChange)}%
                     </span>
                   </div>
-                  <h3 className="text-gray-500 text-sm mb-1">Ventas Totales</h3>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <h3 className="text-gray-600 text-sm font-medium mb-2">Ventas Totales</h3>
+                  <p className="text-3xl font-bold text-gray-900 font-serif">
                     {formatCurrency(stats.totalSales)}
                   </p>
                 </div>
 
                 {/* Total Orders */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl border border-primary-100 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                      <Receipt className="h-6 w-6 text-blue-600" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-500 rounded-2xl flex items-center justify-center shadow-lg">
+                      <Receipt className="h-7 w-7 text-white" />
                     </div>
-                    <span className={`flex items-center gap-1 text-sm ${
-                      stats.ordersChange >= 0 ? 'text-green-600' : 'text-red-600'
+                    <span className={`flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full ${
+                      stats.ordersChange >= 0
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
                     }`}>
                       {stats.ordersChange >= 0 ? (
                         <ArrowUpRight className="h-4 w-4" />
@@ -283,20 +300,22 @@ const Dashboard = () => {
                       {Math.abs(stats.ordersChange)}%
                     </span>
                   </div>
-                  <h3 className="text-gray-500 text-sm mb-1">Pedidos</h3>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <h3 className="text-gray-600 text-sm font-medium mb-2">Pedidos</h3>
+                  <p className="text-3xl font-bold text-gray-900 font-serif">
                     {stats.totalOrders.toLocaleString()}
                   </p>
                 </div>
 
                 {/* Total Users */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl border border-primary-100 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                      <Users className="h-6 w-6 text-purple-600" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <Users className="h-7 w-7 text-white" />
                     </div>
-                    <span className={`flex items-center gap-1 text-sm ${
-                      stats.usersChange >= 0 ? 'text-green-600' : 'text-red-600'
+                    <span className={`flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full ${
+                      stats.usersChange >= 0
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
                     }`}>
                       {stats.usersChange >= 0 ? (
                         <ArrowUpRight className="h-4 w-4" />
@@ -306,20 +325,22 @@ const Dashboard = () => {
                       {Math.abs(stats.usersChange)}%
                     </span>
                   </div>
-                  <h3 className="text-gray-500 text-sm mb-1">Usuarios</h3>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <h3 className="text-gray-600 text-sm font-medium mb-2">Usuarios</h3>
+                  <p className="text-3xl font-bold text-gray-900 font-serif">
                     {stats.totalUsers.toLocaleString()}
                   </p>
                 </div>
 
                 {/* Avg Order Value */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl border border-primary-100 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                      <TrendingUp className="h-6 w-6 text-orange-600" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <TrendingUp className="h-7 w-7 text-white" />
                     </div>
-                    <span className={`flex items-center gap-1 text-sm ${
-                      stats.avgChange >= 0 ? 'text-green-600' : 'text-red-600'
+                    <span className={`flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full ${
+                      stats.avgChange >= 0
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
                     }`}>
                       {stats.avgChange >= 0 ? (
                         <ArrowUpRight className="h-4 w-4" />
@@ -329,8 +350,8 @@ const Dashboard = () => {
                       {Math.abs(stats.avgChange)}%
                     </span>
                   </div>
-                  <h3 className="text-gray-500 text-sm mb-1">Valor Promedio</h3>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <h3 className="text-gray-600 text-sm font-medium mb-2">Valor Promedio</h3>
+                  <p className="text-3xl font-bold text-gray-900 font-serif">
                     {formatCurrency(stats.avgOrderValue)}
                   </p>
                 </div>
@@ -339,47 +360,54 @@ const Dashboard = () => {
               {/* Charts Row */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 {/* Sales Chart */}
-                <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-lg border border-primary-100 hover:shadow-xl transition-shadow duration-300">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-semibold text-gray-900">Ventas de la Semana</h3>
-                    <select className="text-sm border rounded-lg px-3 py-1">
+                    <div>
+                      <h3 className="font-serif font-bold text-xl text-gray-900">Ventas de la Semana</h3>
+                      <p className="text-sm text-gray-500">Últimos 7 días</p>
+                    </div>
+                    <select className="text-sm border border-primary-200 rounded-xl px-4 py-2 bg-primary-50 text-primary-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all">
                       <option>Esta semana</option>
                       <option>Última semana</option>
                       <option>Este mes</option>
                     </select>
                   </div>
-                  <div className="flex items-end gap-2 h-48">
+                  <div className="flex items-end gap-3 h-48">
                     {mockSalesData.map((day, index) => (
-                      <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                      <div key={index} className="flex-1 flex flex-col items-center gap-2 group">
                         <div
-                          className="w-full bg-black rounded-t-lg transition-all duration-500 hover:bg-gray-800"
+                          className="w-full bg-gradient-to-t from-primary-600 to-primary-400 rounded-t-xl transition-all duration-500 hover:from-primary-700 hover:to-primary-500 shadow-md cursor-pointer"
                           style={{ height: `${(day.value / maxSalesValue) * 100}%` }}
+                          title={formatCurrency(day.value)}
                         />
-                        <span className="text-xs text-gray-500">{day.label}</span>
+                        <span className="text-xs text-gray-600 font-medium group-hover:text-primary-600 transition-colors">{day.label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Top Products */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border">
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-primary-100 hover:shadow-xl transition-shadow duration-300">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-semibold text-gray-900">Top Productos</h3>
-                    <button className="text-black text-sm hover:underline">Ver todos</button>
+                    <div>
+                      <h3 className="font-serif font-bold text-xl text-gray-900">Top Productos</h3>
+                      <p className="text-sm text-gray-500">Más vendidos</p>
+                    </div>
+                    <button className="text-primary-600 text-sm hover:text-primary-700 font-medium hover:underline transition-colors">Ver todos</button>
                   </div>
                   <div className="space-y-4">
                     {mockTopProducts.slice(0, 5).map((product, index) => (
-                      <div key={index} className="flex items-center gap-4">
-                        <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black font-medium text-sm">
+                      <div key={index} className="flex items-center gap-4 p-2 rounded-xl hover:bg-primary-50 transition-colors cursor-pointer">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl flex items-center justify-center text-primary-700 font-bold text-sm shadow-sm">
                           {index + 1}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-gray-900 truncate">{product.name}</p>
+                          <p className="font-semibold text-gray-900 truncate">{product.name}</p>
                           <p className="text-sm text-gray-500">{product.orders} pedidos</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium text-gray-900">{formatCurrency(product.revenue)}</p>
-                          <span className={`text-xs flex items-center gap-1 ${
+                          <p className="font-bold text-gray-900 text-sm">{formatCurrency(product.revenue)}</p>
+                          <span className={`text-xs flex items-center justify-end gap-1 font-semibold ${
                             product.trend >= 0 ? 'text-green-600' : 'text-red-600'
                           }`}>
                             {product.trend >= 0 ? '+' : ''}{product.trend}%
@@ -392,43 +420,57 @@ const Dashboard = () => {
               </div>
 
               {/* Recent Orders */}
-              <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
-                <div className="px-6 py-4 border-b flex items-center justify-between">
-                  <h3 className="font-semibold text-gray-900">Pedidos Recientes</h3>
+              <div className="bg-white rounded-2xl shadow-lg border border-primary-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-primary-50 to-white flex items-center justify-between">
+                  <div>
+                    <h3 className="font-serif font-bold text-xl text-gray-900">Pedidos Recientes</h3>
+                    <p className="text-sm text-gray-500">Actividad en tiempo real</p>
+                  </div>
                   <button
                     onClick={() => setActiveTab('orders')}
-                    className="text-ocean-600 text-sm hover:underline flex items-center gap-1"
+                    className="text-primary-600 text-sm hover:text-primary-700 font-medium hover:underline flex items-center gap-1 transition-colors"
                   >
                     Ver todos <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-gradient-to-r from-primary-50 to-gray-50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pedido</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Items</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tiempo</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Pedido</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Cliente</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Items</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Total</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Estado</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tiempo</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y">
+                    <tbody className="divide-y divide-gray-100">
                       {recentOrders.map((order) => (
-                        <tr key={order.id} className="hover:bg-gray-50">
+                        <tr key={order.id} className="hover:bg-primary-50/50 transition-colors cursor-pointer">
                           <td className="px-6 py-4">
-                            <span className="font-medium text-ocean-600">{order.id}</span>
+                            <span className="font-bold text-primary-600 hover:text-primary-700 transition-colors">{order.id}</span>
                           </td>
-                          <td className="px-6 py-4 text-gray-900">{order.customer}</td>
-                          <td className="px-6 py-4 text-gray-500">{order.items} items</td>
-                          <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(order.total)}</td>
                           <td className="px-6 py-4">
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                            <span className="font-medium text-gray-900">{order.customer}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-gray-600">{order.items} items</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="font-bold text-gray-900">{formatCurrency(order.total)}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-sm ${getStatusColor(order.status)}`}>
                               {getStatusLabel(order.status)}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-gray-500">{order.time}</td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-gray-500 flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {order.time}
+                            </span>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -439,32 +481,52 @@ const Dashboard = () => {
           )}
 
           {activeTab === 'orders' && (
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <p className="text-gray-600">Gestión de pedidos en desarrollo...</p>
+            <div className="bg-white rounded-2xl shadow-lg border border-primary-100 p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <ShoppingBag className="w-10 h-10 text-primary-600" />
+              </div>
+              <h3 className="font-serif font-bold text-2xl text-gray-900 mb-2">Gestión de Pedidos</h3>
+              <p className="text-gray-600">Esta sección está en desarrollo...</p>
             </div>
           )}
 
           {activeTab === 'products' && (
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <p className="text-gray-600">Gestión del menú en desarrollo...</p>
+            <div className="bg-white rounded-2xl shadow-lg border border-primary-100 p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <Utensils className="w-10 h-10 text-secondary-600" />
+              </div>
+              <h3 className="font-serif font-bold text-2xl text-gray-900 mb-2">Gestión del Menú</h3>
+              <p className="text-gray-600">Esta sección está en desarrollo...</p>
             </div>
           )}
 
           {activeTab === 'users' && (
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <p className="text-gray-600">Gestión de usuarios en desarrollo...</p>
+            <div className="bg-white rounded-2xl shadow-lg border border-primary-100 p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <Users className="w-10 h-10 text-primary-600" />
+              </div>
+              <h3 className="font-serif font-bold text-2xl text-gray-900 mb-2">Gestión de Usuarios</h3>
+              <p className="text-gray-600">Esta sección está en desarrollo...</p>
             </div>
           )}
 
           {activeTab === 'reservations' && (
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <p className="text-gray-600">Gestión de reservas en desarrollo...</p>
+            <div className="bg-white rounded-2xl shadow-lg border border-primary-100 p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-accent-100 to-accent-200 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-10 h-10 text-accent-600" />
+              </div>
+              <h3 className="font-serif font-bold text-2xl text-gray-900 mb-2">Gestión de Reservas</h3>
+              <p className="text-gray-600">Esta sección está en desarrollo...</p>
             </div>
           )}
 
           {activeTab === 'analytics' && (
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <p className="text-gray-600">Analytics en desarrollo...</p>
+            <div className="bg-white rounded-2xl shadow-lg border border-primary-100 p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <TrendingUp className="w-10 h-10 text-green-600" />
+              </div>
+              <h3 className="font-serif font-bold text-2xl text-gray-900 mb-2">Analytics Avanzados</h3>
+              <p className="text-gray-600">Esta sección está en desarrollo...</p>
             </div>
           )}
         </div>
